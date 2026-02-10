@@ -60,3 +60,80 @@
 
         .counter-box {
             background: rgba(0, 0, 0, 0.2);
+            padding: 20px 30px; border-radius: 40px; display: inline-block;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);
+            margin-top: 10px;
+        }
+
+        #days { font-size: 2.2rem; font-weight: bold; display: block; }
+
+        .heart { position: absolute; bottom: -10%; color: rgba(255, 255, 255, 0.6); animation: float 6s linear infinite; }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; margin-bottom: 20px;">Hola mi amor...</h2>
+        <button class="start-btn" onclick="comenzar()">Toca aquí ❤️</button>
+    </div>
+
+    <div class="container" id="mainContent">
+        <h1>Feliz Día mi amor ❤️</h1>
+        
+        <img src="Zoro.png" alt="Zoro" class="personaje">
+
+        <div class="counter-box">
+            <p style="margin:0; font-size: 1rem; opacity: 0.9;">Estamos juntos hace</p>
+            <span id="days">0 días</span>
+        </div>
+    </div>
+
+    <audio id="miMusica" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function comenzar() {
+            // Reproducir música y cambiar pantalla
+            const musica = document.getElementById('miMusica');
+            musica.play().catch(error => console.log("Reproducción automática bloqueada"));
+            
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('mainContent').classList.add('visible');
+                // Lluvia de corazones
+                setInterval(createHeart, 300);
+            }, 800);
+        }
+
+        // Configuración de la fecha (Año, Mes-1, Día)
+        const fechaInicio = new Date(2016, 1, 14); 
+
+        function actualizarContador() {
+            const hoy = new Date();
+            const diferencia = hoy - fechaInicio;
+            const diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            document.getElementById('days').innerText = diasTotales + " días ❤️";
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+
+        actualizarContador();
+    </script>
+</body>
+</html>
