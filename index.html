@@ -8,45 +8,48 @@
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
-            overflow: hidden; font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #ff5f6d, #ffc371);
+            overflow-x: hidden; font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f75c7e, #ff9a8b, #ffc3a0);
             color: white; text-align: center;
         }
 
-        /* Pantalla de inicio con el botón */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 95, 109, 1);
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; z-index: 100; transition: 0.8s;
+            background: #f75c7e; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 100; transition: 0.8s;
         }
 
         .start-btn {
-            background: white; color: #ff5f6d; border: none;
-            padding: 15px 30px; font-size: 1.2rem; font-weight: bold;
-            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            animation: pulse 1.5s infinite;
+            background: white; color: #f75c7e; border: none;
+            padding: 15px 35px; font-size: 1.3rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+        .start-btn:active { transform: scale(0.9); }
 
-        /* Contenedor principal (oculto al inicio) */
         .container {
             opacity: 0; transform: translateY(20px);
-            transition: 1s ease-in-out; padding: 20px; width: 90%;
+            transition: 1.2s ease-in-out; padding: 20px; width: 90%; margin: auto;
         }
 
         .visible { opacity: 1; transform: translateY(0); }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; margin-bottom: 0; }
+        h1 { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 3.5rem; 
+            margin-bottom: 0; 
+            margin-top: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
 
+        /* Imagen de Zoro.png con animación de flotado */
         .personaje {
-            width: 180px; height: auto; margin: 20px auto; display: block;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            width: 250px; /* Tamaño ideal para móvil */
+            height: auto; 
+            margin: 20px auto; 
+            display: block;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.2));
             animation: bounce 3s ease-in-out infinite;
         }
 
@@ -56,76 +59,4 @@
         }
 
         .counter-box {
-            background: rgba(0, 0, 0, 0.15); padding: 20px;
-            border-radius: 30px; display: inline-block;
-            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        #days { font-size: 2rem; font-weight: bold; display: block; }
-
-        .heart { position: absolute; bottom: -10%; color: rgba(255, 255, 255, 0.6); animation: float 6s linear infinite; }
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="overlay">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Hola amor...</h2>
-        <p>Tengo algo para ti</p>
-        <button class="start-btn" onclick="comenzar()">Abrir Regalo 🎁</button>
-    </div>
-
-    <div class="container" id="mainContent">
-        <h1>Feliz Día mi amor ❤️</h1>
-        <img src="Zoro.png" alt="Zoro" class="personaje">
-        <div class="counter-box">
-            <p style="margin:0;">Estamos juntos hace</p>
-            <span id="days">0 días</span>
-        </div>
-    </div>
-
-    <audio id="miMusica" loop>
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
-
-    <script>
-        function comenzar() {
-            // Reproducir música
-            document.getElementById('miMusica').play();
-            // Ocultar overlay
-            document.getElementById('overlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('overlay').style.display = 'none';
-                document.getElementById('mainContent').classList.add('visible');
-            }, 800);
-            // Iniciar corazones
-            setInterval(createHeart, 400);
-        }
-
-        const fechaInicio = new Date(2016, 1, 14); // Recuerda: Enero=0, Febrero=1
-
-        function actualizarContador() {
-            const hoy = new Date();
-            const diferencia = hoy - fechaInicio;
-            const diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-            document.getElementById('days').innerText = diasTotales + " días ❤️";
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 6000);
-        }
-
-        actualizarContador();
-    </script>
-</body>
-</html>
+            background: rgba(0, 0, 0, 0.2);
